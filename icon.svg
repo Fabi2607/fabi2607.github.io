@@ -4,11 +4,11 @@
   <ellipse cx="256" cy="270" rx="190" ry="150" fill="#1a1a2e"/>
   <ellipse cx="256" cy="270" rx="160" ry="120" fill="#222244"/>
   <!-- stalactites -->
-  <polygon points="140,120 120,200 160,200" fill="#4af"/>
-  <polygon points="200,100 180,195 220,195" fill="#4af"/>
-  <polygon points="260,90 240,200 280,200" fill="#4af"/>
-  <polygon points="320,100 300,195 340,195" fill="#4af"/>
-  <polygon points="380,120 360,200 400,200" fill="#4af"/>
+  <polygon points="120,120 160,120 140,200" fill="#4af"/>
+  <polygon points="180,100 220,100 200,195" fill="#4af"/>
+  <polygon points="240,90 280,90 260,200" fill="#4af"/>
+  <polygon points="300,100 340,100 320,195" fill="#4af"/>
+  <polygon points="360,120 400,120 380,200" fill="#4af"/>
   <!-- stalagmites -->
   <polygon points="130,400 150,310 170,400" fill="#4af"/>
   <polygon points="210,400 230,305 250,400" fill="#4af"/>
