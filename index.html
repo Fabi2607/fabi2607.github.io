@@ -59,12 +59,53 @@
       font: 12px/1 monospace; padding: 4px 8px;
       border-radius: 3px; pointer-events: none; white-space: nowrap;
     }
+    #measure-label {
+      position: fixed; display: none;
+      background: rgba(0,0,0,.8); color: #ff8800;
+      font: 13px/1.4 monospace; padding: 4px 8px;
+      border-radius: 3px; pointer-events: none; white-space: nowrap;
+      border: 1px solid #ff8800;
+      transform: translateX(-50%);
+    }
+    #measure-label .measure-dist { font-size: 14px; font-weight: bold; display: block; }
+    #measure-label .measure-sub  { font-size: 10px; color: #cc6600; display: block; }
+    #station-info {
+      position: fixed; display: none;
+      background: rgba(0,0,0,.8); color: #44aaff;
+      font: 13px/1.4 monospace; padding: 4px 8px;
+      border-radius: 3px; pointer-events: none; white-space: nowrap;
+      border: 1px solid #44aaff;
+      transform: translateX(-50%);
+    }
+    #station-info .station-info-name { font-size: 14px; font-weight: bold; display: block; }
+    #station-info .station-info-sub  { font-size: 10px; color: #3388cc; display: block; }
+    #proj-btn.active { background: #553300; color: #ff8800; border-color: #ff8800; }
+    #search-box { display: flex; flex-direction: column; margin: 4px 0 2px; }
+    #search-input {
+      background: #222; color: #eee; border: 1px solid #555;
+      padding: 2px 6px; font: 12px monospace; width: 160px;
+      outline: none;
+    }
+    #search-input:focus { border-color: #4af; }
+    #search-results {
+      background: rgba(0,0,0,.85); border: 1px solid #444; border-top: none;
+      max-height: 220px; overflow-y: auto; display: none;
+      width: 160px; font: 11px/1.4 monospace;
+    }
+    #search-results .search-item {
+      padding: 2px 6px; cursor: pointer; color: #ccc;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    #search-results .search-item:hover { background: #333; color: #4af; }
+    #search-results .search-more {
+      padding: 2px 6px; color: #666; font-style: italic;
+    }
   </style>
-  <script type="module" crossorigin src="/assets/index-D0BcCcIW.js"></script>
+  <script type="module" crossorigin src="/assets/index-D4Z4GO_i.js"></script>
 <link rel="manifest" href="/manifest.webmanifest"><script id="vite-plugin-pwa:register-sw" src="/registerSW.js"></script></head>
 <body>
   <canvas></canvas>
   <div id="info">Loading…</div>
-  <div id="hints">P – plan view<br>E – elevation<br>R – reset<br>O – ortho toggle</div>
+  <div id="hints">P – plan view<br>E – elevation<br>R – reset<br>O – ortho toggle<br>M – measure</div>
 </body>
 </html>
