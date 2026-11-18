@@ -30,32 +30,6 @@
       border: 1px solid #aaa; border-top: none;
       height: 5px; margin-top: 3px;
     }
-    #tooltip {
-      position: absolute; display: none;
-      background: rgba(0,0,0,.75); color: #eee;
-      font: 12px/1 monospace; padding: 4px 8px;
-      border-radius: 3px; pointer-events: none; white-space: nowrap;
-    }
-    #measure-label {
-      position: fixed; display: none;
-      background: rgba(0,0,0,.8); color: #ff8800;
-      font: 13px/1.4 monospace; padding: 4px 8px;
-      border-radius: 3px; pointer-events: none; white-space: nowrap;
-      border: 1px solid #ff8800;
-      transform: translateX(-50%);
-    }
-    #measure-label .measure-dist { font-size: 14px; font-weight: bold; display: block; }
-    #measure-label .measure-sub  { font-size: 10px; color: #cc6600; display: block; }
-    #station-info {
-      position: fixed; display: none;
-      background: rgba(0,0,0,.8); color: #44aaff;
-      font: 13px/1.4 monospace; padding: 4px 8px;
-      border-radius: 3px; pointer-events: none; white-space: nowrap;
-      border: 1px solid #44aaff;
-      transform: translateX(-50%);
-    }
-    #station-info .station-info-name { font-size: 14px; font-weight: bold; display: block; }
-    #station-info .station-info-sub  { font-size: 10px; color: #3388cc; display: block; }
     :root {
       --panel-bg: rgba(22, 24, 28, .82);
       --panel-border: rgba(255, 255, 255, .09);
@@ -233,8 +207,43 @@
       content: ''; position: absolute; left: -6px; top: 50%; width: 3px; height: 1px; background: rgba(255,255,255,.5);
     }
     #altitude-legend .legend-tick.end { color: #d6d9de; }
+    /* Station card: hover tooltip (#tooltip), pinned click label (#station-info)
+       and measurement result (#measure-label) */
+    .station-card {
+      position: fixed; display: none; z-index: 6; pointer-events: none;
+      min-width: 150px; max-width: 320px; padding: 7px 10px 8px;
+      background: rgba(22, 24, 28, .9); color: #d6d9de;
+      border: 1px solid rgba(255, 255, 255, .12); border-radius: 8px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, .5);
+      font: 11px/1.45 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    }
+    .station-card .card-name {
+      font: 600 12px/1.3 ui-monospace, SFMono-Regular, Menlo, monospace; color: #fff;
+      margin-bottom: 4px; overflow-wrap: anywhere;
+    }
+    .station-card dl { display: grid; grid-template-columns: auto auto; column-gap: 12px; }
+    .station-card dt { color: #8b919a; }
+    .station-card dd { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+    .station-card .card-sub {
+      font: 10px/1.35 ui-monospace, SFMono-Regular, Menlo, monospace; color: #8b919a;
+      margin: -2px 0 5px; overflow-wrap: anywhere;
+    }
+    /* Pinned: centred above its anchor with a pointer, accent border */
+    .station-card.pinned {
+      --card-accent: #4aa8ff; --card-accent-text: #8cc8ff;
+      z-index: 5; background: #16181c; border-color: var(--card-accent);
+      transform: translate(-50%, calc(-100% - 14px));
+    }
+    .station-card.pinned .card-name { color: var(--card-accent-text); }
+    .station-card.measure { --card-accent: #ff8800; --card-accent-text: #ffb366; }
+    .station-card.measure .card-name { font-size: 15px; }
+    .station-card.pinned::after {
+      content: ''; position: absolute; left: 50%; bottom: -6px; width: 10px; height: 10px;
+      background: inherit; border: solid var(--card-accent); border-width: 0 1px 1px 0;
+      transform: translateX(-50%) rotate(45deg);
+    }
   </style>
-  <script type="module" crossorigin src="/assets/index-C4hwezki.js"></script>
+  <script type="module" crossorigin src="/assets/index-BqxmCvvE.js"></script>
 <link rel="manifest" href="/manifest.webmanifest"><script id="vite-plugin-pwa:register-sw" src="/registerSW.js"></script></head>
 <body>
   <canvas></canvas>
