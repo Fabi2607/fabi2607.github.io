@@ -21,6 +21,7 @@
       padding: 6px 12px; border-radius: 999px; pointer-events: none;
       white-space: nowrap;
     }
+    #info.error { color: #ffc2b8; border-color: rgba(255, 110, 90, .55); border-radius: 10px; white-space: normal; max-width: calc(100% - 24px); line-height: 1.35; text-align: center; }
     #scalebar {
       position: absolute; bottom: 40px; left: 12px;
       color: #ccc; font: 11px/1 monospace;
@@ -113,6 +114,7 @@
       background: transparent; color: var(--panel-muted); cursor: pointer;
     }
     #toolbar .segmented button:hover { color: var(--panel-text); }
+    #toolbar .segmented button:disabled { opacity: .35; cursor: default; }
     #toolbar .segmented button.active { background: var(--ctrl-bg-hover); color: var(--panel-text); box-shadow: 0 1px 2px rgba(0, 0, 0, .4); }
 
     /* Switch rows */
@@ -183,7 +185,7 @@
     #search-results .search-item:hover .search-depth { color: inherit; }
     #search-results .search-item:hover { background: var(--accent-soft); color: #fff; }
     #search-results .search-more { padding: 2px 6px; color: var(--panel-faint); font-style: italic; }
-    #altitude-legend {
+    #color-legend {
       position: absolute; top: 10px; right: 10px; padding: 8px 10px 10px;
       background: rgba(22, 24, 28, .82); color: #c3c8cf;
       border: 1px solid rgba(255, 255, 255, .09); border-radius: 10px;
@@ -191,22 +193,22 @@
       font: 11px/1 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
       user-select: none;
     }
-    #altitude-legend[hidden] { display: none; }
-    #altitude-legend .legend-title {
+    #color-legend[hidden] { display: none; }
+    #color-legend .legend-title {
       font-size: 10px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
       color: #5d636c; margin-bottom: 8px;
     }
-    #altitude-legend .legend-scale { display: flex; gap: 6px; }
-    #altitude-legend .legend-bar { width: 10px; border-radius: 3px; flex: none; }
-    #altitude-legend .legend-ticks { position: relative; min-width: 54px; }
-    #altitude-legend .legend-tick {
+    #color-legend .legend-scale { display: flex; gap: 6px; }
+    #color-legend .legend-bar { width: 10px; border-radius: 3px; flex: none; }
+    #color-legend .legend-ticks { position: relative; min-width: 54px; }
+    #color-legend .legend-tick {
       position: absolute; left: 0; transform: translateY(-50%); white-space: nowrap;
       font-variant-numeric: tabular-nums; color: #8b919a;
     }
-    #altitude-legend .legend-tick::before {
+    #color-legend .legend-tick::before {
       content: ''; position: absolute; left: -6px; top: 50%; width: 3px; height: 1px; background: rgba(255,255,255,.5);
     }
-    #altitude-legend .legend-tick.end { color: #d6d9de; }
+    #color-legend .legend-tick.end { color: #d6d9de; }
     /* Station card: hover tooltip (#tooltip), pinned click label (#station-info)
        and measurement result (#measure-label) */
     .station-card {
@@ -243,7 +245,7 @@
       transform: translateX(-50%) rotate(45deg);
     }
   </style>
-  <script type="module" crossorigin src="/assets/index---VqFAoa.js"></script>
+  <script type="module" crossorigin src="/assets/index-Cx8a0TYF.js"></script>
 <link rel="manifest" href="/manifest.webmanifest"><script id="vite-plugin-pwa:register-sw" src="/registerSW.js"></script></head>
 <body>
   <canvas></canvas>
