@@ -16,34 +16,11 @@
     canvas { display: block; width: 100% !important; height: 100% !important; }
     #info {
       position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%);
-      color: #ccc; font: 13px/1 monospace; background: rgba(0,0,0,.5);
-      padding: 4px 10px; border-radius: 4px; pointer-events: none;
+      color: #c3c8cf; font: 12px/1 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      background: rgba(22, 24, 28, .82); border: 1px solid rgba(255, 255, 255, .09);
+      padding: 6px 12px; border-radius: 999px; pointer-events: none;
       white-space: nowrap;
     }
-    #hints {
-      position: absolute; top: 10px; right: 12px;
-      color: #888; font: 11px/1.7 monospace; text-align: right;
-      pointer-events: none;
-    }
-    #toolbar {
-      position: absolute; top: 10px; left: 12px;
-      display: flex; flex-direction: column; gap: 2px;
-      color: #ccc; font: 12px/1.8 monospace;
-    }
-    #toolbar label { cursor: pointer; user-select: none; }
-    #toolbar input[type=checkbox] { cursor: pointer; margin-right: 5px; accent-color: #4af; }
-    #toolbar .sub-ctrl {
-      padding-left: 14px; display: flex; align-items: center; gap: 3px;
-      color: #aaa; font-size: 11px;
-    }
-    #toolbar input[type=range] { width: 72px; cursor: pointer; accent-color: #4af; }
-    #toolbar .ctrl-val { min-width: 28px; color: #888; }
-    #proj-btn {
-      margin-top: 4px; padding: 1px 6px;
-      background: #333; color: #ccc; border: 1px solid #555;
-      font: 12px/1.8 monospace; cursor: pointer; text-align: left;
-    }
-    #proj-btn:hover { background: #444; }
     #scalebar {
       position: absolute; bottom: 40px; left: 12px;
       color: #ccc; font: 11px/1 monospace;
@@ -79,33 +56,188 @@
     }
     #station-info .station-info-name { font-size: 14px; font-weight: bold; display: block; }
     #station-info .station-info-sub  { font-size: 10px; color: #3388cc; display: block; }
-    #proj-btn.active { background: #553300; color: #ff8800; border-color: #ff8800; }
-    #search-box { display: flex; flex-direction: column; margin: 4px 0 2px; }
-    #search-input {
-      background: #222; color: #eee; border: 1px solid #555;
-      padding: 2px 6px; font: 12px monospace; width: 160px;
-      outline: none;
+    :root {
+      --panel-bg: rgba(22, 24, 28, .82);
+      --panel-border: rgba(255, 255, 255, .09);
+      --panel-text: #d6d9de;
+      --panel-muted: #8b919a;
+      --panel-faint: #5d636c;
+      --ctrl-bg: rgba(255, 255, 255, .06);
+      --ctrl-bg-hover: rgba(255, 255, 255, .11);
+      --ctrl-border: rgba(255, 255, 255, .12);
+      --accent: #4aa8ff;
+      --accent-soft: rgba(74, 168, 255, .18);
+      --measure: #ff8800;
+      --ui-font: 12px/1.4 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
     }
-    #search-input:focus { border-color: #4af; }
+    #toolbar {
+      position: absolute; top: 10px; left: 10px; width: 236px;
+      max-height: calc(100% - 80px); display: flex; flex-direction: column;
+      background: var(--panel-bg); color: var(--panel-text); font: var(--ui-font);
+      border: 1px solid var(--panel-border); border-radius: 10px;
+      box-shadow: 0 6px 24px rgba(0, 0, 0, .45);
+      backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+      user-select: none;
+    }
+    #toolbar button { font: inherit; color: inherit; }
+    #toolbar .panel-header {
+      display: flex; align-items: center; gap: 6px;
+      padding: 7px 8px 7px 12px; cursor: pointer;
+    }
+    #toolbar .panel-title {
+      flex: 1; min-width: 0; font-weight: 600; letter-spacing: .01em;
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
+    #toolbar .icon-btn {
+      width: 22px; height: 22px; border: none; border-radius: 5px;
+      background: transparent; color: var(--panel-muted); cursor: pointer; font-size: 13px;
+    }
+    #toolbar .icon-btn:hover { background: var(--ctrl-bg-hover); color: var(--panel-text); }
+    #toolbar .panel-body {
+      display: flex; flex-direction: column; gap: 10px;
+      padding: 2px 12px 12px; overflow-y: auto; overscroll-behavior: contain;
+      scrollbar-width: thin; scrollbar-color: #444 transparent;
+    }
+    #toolbar.collapsed .panel-body { display: none; }
+    #toolbar.collapsed { width: auto; max-width: 236px; }
+    #toolbar .panel-section { display: flex; flex-direction: column; gap: 2px; }
+    #toolbar .panel-section + .panel-section { border-top: 1px solid var(--panel-border); padding-top: 10px; }
+    #toolbar h3 {
+      font-size: 10px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
+      color: var(--panel-faint); margin-bottom: 4px;
+    }
+    #toolbar [hidden] { display: none !important; }
+
+    /* Buttons */
+    #toolbar .btn-row { display: flex; gap: 4px; }
+    #toolbar .btn-row + .btn-row { margin-top: 4px; }
+    #toolbar .btn {
+      flex: 1 1 auto; min-width: 0; display: inline-flex; align-items: center; justify-content: center; gap: 5px;
+      height: 26px; padding: 0 5px; cursor: pointer; white-space: nowrap;
+      background: var(--ctrl-bg); border: 1px solid var(--ctrl-border); border-radius: 6px;
+    }
+    #toolbar .btn.wide, #toolbar .btn-row > .segmented { flex: 1 1 0; }
+    #toolbar .btn:hover { background: var(--ctrl-bg-hover); }
+    #toolbar .btn:focus-visible, #toolbar .segmented button:focus-visible,
+    #toolbar .switch:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+    #toolbar .btn.primary { background: var(--accent-soft); border-color: rgba(74, 168, 255, .45); color: #cfe6ff; }
+    #toolbar .btn.primary:hover { background: rgba(74, 168, 255, .28); }
+    #toolbar .btn.active { background: rgba(255, 136, 0, .18); border-color: var(--measure); color: #ffb366; }
+    #toolbar kbd {
+      font: 10px/1 ui-monospace, SFMono-Regular, Menlo, monospace; color: var(--panel-muted);
+      padding: 2px 4px; border: 1px solid var(--ctrl-border); border-radius: 3px;
+    }
+    #toolbar .btn.active kbd { color: inherit; border-color: currentColor; }
+
+    /* Segmented control */
+    #toolbar .segmented {
+      flex: 1; display: flex; padding: 2px; gap: 2px;
+      background: rgba(0, 0, 0, .25); border: 1px solid var(--ctrl-border); border-radius: 6px;
+    }
+    #toolbar .segmented button {
+      flex: 1 1 0; min-width: 0; height: 20px; padding: 0 2px; border: none; border-radius: 4px;
+      background: transparent; color: var(--panel-muted); cursor: pointer;
+    }
+    #toolbar .segmented button:hover { color: var(--panel-text); }
+    #toolbar .segmented button.active { background: var(--ctrl-bg-hover); color: var(--panel-text); box-shadow: 0 1px 2px rgba(0, 0, 0, .4); }
+
+    /* Switch rows */
+    #toolbar .switch-row {
+      display: flex; align-items: center; gap: 6px; min-height: 26px;
+      padding: 0 6px; margin: 0 -6px; border-radius: 5px; cursor: pointer;
+    }
+    #toolbar .switch-row:hover { background: var(--ctrl-bg); }
+    #toolbar .row-label { flex: 1; }
+    #toolbar .row-status { color: var(--accent); font-size: 11px; }
+    #toolbar .switch-row.busy .row-status::before {
+      content: ''; display: inline-block; width: 9px; height: 9px; margin-right: 5px; vertical-align: -1px;
+      border: 1.5px solid var(--accent); border-right-color: transparent; border-radius: 50%;
+      animation: cv-spin .8s linear infinite;
+    }
+    @keyframes cv-spin { to { transform: rotate(360deg); } }
+    #toolbar .switch {
+      appearance: none; -webkit-appearance: none; flex: none; position: relative;
+      width: 28px; height: 16px; border-radius: 8px; cursor: pointer;
+      background: #3a3f46; transition: background .15s;
+    }
+    #toolbar .switch::after {
+      content: ''; position: absolute; top: 2px; left: 2px; width: 12px; height: 12px;
+      border-radius: 50%; background: #c9cdd3; transition: transform .15s;
+    }
+    #toolbar .switch:checked { background: var(--accent); }
+    #toolbar .switch:checked::after { transform: translateX(12px); background: #fff; }
+
+    /* Sub-controls under a layer */
+    #toolbar .sub-ctrls {
+      display: flex; flex-direction: column; gap: 2px;
+      margin: 0 0 4px 4px; padding-left: 10px; border-left: 1px solid var(--panel-border);
+      color: var(--panel-muted);
+    }
+    #toolbar .sub-ctrls:empty { display: none; }
+    #toolbar .sub-ctrls .switch-row { min-height: 24px; }
+    #toolbar .ctrl-row { display: flex; align-items: center; gap: 6px; min-height: 26px; }
+    #toolbar .ctrl-label { width: 40px; flex: none; }
+    #toolbar input[type=range] { flex: 1; min-width: 0; cursor: pointer; accent-color: var(--accent); }
+    #toolbar .ctrl-val { min-width: 30px; text-align: right; font-variant-numeric: tabular-nums; }
+    #toolbar .walls-legend { display: flex; flex-direction: column; gap: 1px; padding: 2px 0 2px 46px; }
+    #toolbar .legend-item { display: flex; align-items: center; gap: 6px; }
+    #toolbar .legend-swatch { width: 9px; height: 9px; border-radius: 2px; flex: none; }
+    #toolbar .legend-count { margin-left: auto; font-variant-numeric: tabular-nums; color: var(--panel-faint); }
+
+    /* Station search */
+    #search-box { position: relative; display: flex; flex-direction: column; }
+    #search-input {
+      width: 100%; height: 28px; padding: 0 8px 0 26px; outline: none;
+      background: rgba(0, 0, 0, .3) no-repeat 8px center / 12px 12px; color: #eee;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%238b919a' stroke-width='2'%3E%3Ccircle cx='7' cy='7' r='5'/%3E%3Cpath d='m11 11 4 4'/%3E%3C/svg%3E");
+      border: 1px solid var(--ctrl-border); border-radius: 6px; font: var(--ui-font);
+    }
+    #search-input:focus { border-color: var(--accent); }
+    #search-input::placeholder { color: var(--panel-faint); }
     #search-results {
-      background: rgba(0,0,0,.85); border: 1px solid #444; border-top: none;
-      max-height: 220px; overflow-y: auto; display: none;
-      width: 160px; font: 11px/1.4 monospace;
+      position: absolute; top: 100%; left: 0; right: 0; z-index: 2; margin-top: 4px;
+      background: #1d2025; border: 1px solid var(--ctrl-border); border-radius: 6px;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, .5);
+      max-height: 240px; overflow-y: auto; display: none; padding: 3px;
+      font: 11px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace;
     }
     #search-results .search-item {
-      padding: 2px 6px; cursor: pointer; color: #ccc;
-      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+      display: flex; gap: 8px; padding: 2px 6px; border-radius: 4px; cursor: pointer; color: #ccc;
     }
-    #search-results .search-item:hover { background: #333; color: #4af; }
-    #search-results .search-more {
-      padding: 2px 6px; color: #666; font-style: italic;
+    #search-results .search-name { flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; direction: rtl; text-align: left; }
+    #search-results .search-depth { flex: none; color: var(--panel-faint); font-variant-numeric: tabular-nums; }
+    #search-results .search-item:hover .search-depth { color: inherit; }
+    #search-results .search-item:hover { background: var(--accent-soft); color: #fff; }
+    #search-results .search-more { padding: 2px 6px; color: var(--panel-faint); font-style: italic; }
+    #altitude-legend {
+      position: absolute; top: 10px; right: 10px; padding: 8px 10px 10px;
+      background: rgba(22, 24, 28, .82); color: #c3c8cf;
+      border: 1px solid rgba(255, 255, 255, .09); border-radius: 10px;
+      box-shadow: 0 6px 24px rgba(0, 0, 0, .45);
+      font: 11px/1 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      user-select: none;
     }
+    #altitude-legend[hidden] { display: none; }
+    #altitude-legend .legend-title {
+      font-size: 10px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
+      color: #5d636c; margin-bottom: 8px;
+    }
+    #altitude-legend .legend-scale { display: flex; gap: 6px; }
+    #altitude-legend .legend-bar { width: 10px; border-radius: 3px; flex: none; }
+    #altitude-legend .legend-ticks { position: relative; min-width: 54px; }
+    #altitude-legend .legend-tick {
+      position: absolute; left: 0; transform: translateY(-50%); white-space: nowrap;
+      font-variant-numeric: tabular-nums; color: #8b919a;
+    }
+    #altitude-legend .legend-tick::before {
+      content: ''; position: absolute; left: -6px; top: 50%; width: 3px; height: 1px; background: rgba(255,255,255,.5);
+    }
+    #altitude-legend .legend-tick.end { color: #d6d9de; }
   </style>
-  <script type="module" crossorigin src="/assets/index-D4Z4GO_i.js"></script>
+  <script type="module" crossorigin src="/assets/index-C4hwezki.js"></script>
 <link rel="manifest" href="/manifest.webmanifest"><script id="vite-plugin-pwa:register-sw" src="/registerSW.js"></script></head>
 <body>
   <canvas></canvas>
   <div id="info">Loading…</div>
-  <div id="hints">P – plan view<br>E – elevation<br>R – reset<br>O – ortho toggle<br>M – measure</div>
 </body>
 </html>
